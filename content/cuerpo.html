@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Consulta de datos</h1>
+            <form name="filters" frC-CallBack="listaCompeticiones" method="post" action="/acuario/backend/competiciones.php" frC-AutoLoad="true">
+                <!-- Aquí puedes poner los otros filtros -->
+                <div class="form-group">
+                    <label for="filtro-nadador">Nadador</label>
+                    <select id="filtro-nadador" name="nadador" class="form-control" frC-Store="/acuario/backend/nadadores.php" frC-indexResponse="root:NOMBRE,ID"><option value="">Todos</option></select>
+                    <label for="filtro-piscina">Piscina</label>
+                    <select id="filtro-piscina" name="piscina" class="form-control" frC-Store="/acuario/backend/piscinas.php" frC-indexResponse="root:NOMBRE,ID"><option value="">Todas</option></select>
+                    <label for="filtro-estilo">Estilo</label>
+                    <select id="filtro-estilo" name="estilo" class="form-control" frC-Store="/acuario/backend/estilos.php" frC-indexResponse="root:NOMBRE,ID"><option value="">Todos</option></select>
+                    <label for="filtro-nadador">Distancia</label>
+                    <select id="filtro-nadador" name="distancia" class="form-control">
+                        <option value="">Todas</option><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="400">400</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Prueba</th>
+                        <th>Nadador</th>
+                        <th>Distancia</th>
+                        <th>Estilo</th>
+                        <th>Tiempo</th>
+                        <th>longitug</th>
+                        <th>Piscina</th>
+                    </tr>
+                </thead>
+                <tbody id="datosTabla">
+                    <!-- Aquí puedes poner los datos de cada producto en una fila -->
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
