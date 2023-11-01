@@ -28,3 +28,5 @@ class Fecha
         return $dt->format($output);
     }
 }
+
+?>

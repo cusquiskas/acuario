@@ -2,12 +2,12 @@
 
 class ConfiguracionSistema
 {
-    private $host = 'localhost';
-    private $user = 'super';
-    private $pass = 'còmprame';
-    private $apli = 'super';
+    private $host = 'srv1065.hstgr.io';
+    private $user = 'u164639268_piscina';
+    private $pass = 'P3c3cit0sgr4nd3s';
+    private $apli = 'u164639268_piscina';
 
-    private $home = '/opt/lampp/htdocs/supermercado/';
+    private $home = '/opt/lampp/htdocs/acuario/';
 
     public function getHost()
     {
