@@ -50,6 +50,7 @@ var crono = class {
         me.segundos  .innerHTML = padLeft(0);
         me.centesimas.innerHTML = padLeft(0);
         me.parciales.length = 0;
+        me.tablaTiempo.outerHTML = "";
         $("button[name=reset-crono]").addClass('xx');
         $("button[name=inicia-crono]").removeClass('xx');
     }
