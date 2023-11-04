@@ -50,7 +50,7 @@ var crono = class {
         me.segundos  .innerHTML = padLeft(0);
         me.centesimas.innerHTML = padLeft(0);
         me.parciales.length = 0;
-        me.tablaTiempo.outerHTML = "";
+        $(me.tablaTiempo).empty();
         $("button[name=reset-crono]").addClass('xx');
         $("button[name=inicia-crono]").removeClass('xx');
     }
@@ -85,6 +85,17 @@ var crono = class {
         '<div style="text-align: start;" class="col col-4">'+padLeft(minT)+':'+padLeft(segT)+'.'+padLeft(cenT)+'</div>' +
         '</div>';
         me.tablaTiempo.insertAdjacentHTML("beforeend", row);
+    }
+
+    infoSerie (s, d, e) {
+        if (s) {
+            $("span[name=name-competicion]").html(d.root.COM_PISCINA + ': ' + d.root.COM_NOMBRE);
+            $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
+            $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
+            $("span[name=name-nadador]").html(d.root.SER_NADADOR + ' (' + d.root.SER_CLUB + ')');
+        } else {
+            validaErroresCBK(d);
+        }
     }
 
 }

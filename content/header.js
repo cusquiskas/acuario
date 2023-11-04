@@ -12,6 +12,9 @@ var header = class {
         $("button[name=abre-crono]").click(function () {
             Moduls.getBody().load({ url: 'content/crono/crono.html', script: true });
         });
+        $("button[name=abre-serie]").click(function () {
+            Moduls.getBody().load({ url: 'content/serie/serie.html', script: true });
+        });
     }
 
 }
