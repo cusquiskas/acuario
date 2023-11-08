@@ -1,10 +1,25 @@
 <div style="margin:10px; padding: 10px;">
+    <div class="row" style="text-align: center;">
+        <form name="listaNadadores" method="post" frC-Callback="listaNadadores" action="/acuario/backend/series.php" frC-Autoload="true">
+            <div class="col col-12">
+                <h1>
+                    <select name="COMPETICION"><option value="1">I Competición de prueba</option></select>
+                </h1>
+            </div>
+        </form>
+    </div>
+    <div class="row" style="text-align: center;">
+        <div class="col col-3"><h2><span name="name-piscina"></span></h2></div>
+        <div class="col col-6"><h2><span name="name-prueba"> </span></h2></div>
+        <div class="col col-3"><h2><span name="name-serie">  </span></h2></div>
+    </div>
     <div style="text-align: center;" class="row">
         <div class="col col-12">
-            <button name="abrir-serie"  class="btn btn-success">Abrir Serie</button>
-            <button name="cerrar-serie" class="btn btn-danger xx">Cerrar Serie</button>
+            <button name="abrir-serie"  class="btn btn-success xx">Abrir Serie</button>
+            <button name="cerrar-serie" class="btn btn-danger  xx">Siguiente Serie</button>
         </div>
     </div>
+    <div class="row">&nbsp;</div>
     <div class="row">
         <div class="col-12">
             <table class="table table-striped table-bordered">
@@ -24,8 +39,3 @@
         </div>
     </div>
 </div>
-<form name="listaNadadores" class="xx" method="post" frC-Callback="listaNadadores" action="/acuario/backend/series.php">
-    <input name="COMPETICION" type="number" value="1">
-    <input name="PRUEBA"      type="number" value="1">
-    <input name="ORDEN"       type="number" value="1">
-</form>

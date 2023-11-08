@@ -15,18 +15,18 @@ var crono = class {
 
     añadirEventos () {
         let me = this;
-        $("button[name=inicia-crono]") .click(function() { me.comienzaCrono (me);  });
-        $("button[name=para-crono]")   .click(function() { me.paraCrono     (me);  });
-        $("button[name=reset-crono]")  .click(function() { me.reiniciaCrono (me);  });
+        $("button[name=inicia-crono]" ).click(function() { me.comienzaCrono (me);  });
+        $("button[name=para-crono]"   ).click(function() { me.paraCrono     (me);  });
+        $("button[name=reset-crono]"  ).click(function() { me.reiniciaCrono (me);  });
         $("button[name=parcial-crono]").click(function() { me.parcialCrono  (me);  });
     }
 
     comienzaCrono(me) {
         me.start = new Date();
         me.intervalo = setInterval(me.pintaCrono, 10);
-        $("button[name=inicia-crono]").addClass('xx');
+        $("button[name=inicia-crono]" ).addClass   ('xx');
         $("button[name=parcial-crono]").removeClass('xx');
-        $("button[name=para-crono]").removeClass('xx');
+        $("button[name=para-crono]"   ).removeClass('xx');
     }
 
     parcialCrono(me) {
@@ -38,10 +38,14 @@ var crono = class {
     paraCrono(me) {
         me.parcialCrono(me);
         clearInterval(me.intervalo);
-        this.pintaCrono(true);
-        $("button[name=parcial-crono]").addClass('xx');
-        $("button[name=para-crono]").addClass('xx');
-        $("button[name=reset-crono]").removeClass('xx');
+        this.pintaCrono();
+        $("button[name=parcial-crono]").addClass   ('xx');
+        $("button[name=para-crono]"   ).addClass   ('xx');
+        $("button[name=reset-crono]"  ).removeClass('xx');
+        let form = me.modulo.Forms['guardaTiempo'];
+        form.set(me.modulo.Forms["infoSerie"].get());
+        form.set({TIEMPO:(me.parciales[me.parciales.length - 1] - me.start) / 1000});
+        form.executeForm();
     }
 
     reiniciaCrono (me) {
@@ -51,7 +55,7 @@ var crono = class {
         me.centesimas.innerHTML = padLeft(0);
         me.parciales.length = 0;
         $(me.tablaTiempo).empty();
-        $("button[name=reset-crono]").addClass('xx');
+        $("button[name=reset-crono]" ).addClass   ('xx');
         $("button[name=inicia-crono]").removeClass('xx');
     }
 
@@ -96,6 +100,10 @@ var crono = class {
         } else {
             validaErroresCBK(d);
         }
+    }
+
+    guardaTiempo (s, d, e) {
+        validaErroresCBK(d);
     }
 
 }

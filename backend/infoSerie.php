@@ -10,6 +10,31 @@
 
     $resultado = [];
 
+    $link = new ConexionSistema();
+    
+    $filtro = [
+        0 => ['tipo' => 'i', 'dato' => $_POST['COMPETICION']]  
+    ];  
+    $datosSerieAbierta = $link->consulta( "SELECT DISTINCT ORDEN,
+                                        PRUEBA, ABIERTA
+                                   FROM MRC_SERIE
+                                  WHERE COMPETICION = ? 
+                                    AND ABIERTA < 2
+                                  ORDER 
+                                     BY ABIERTA DESC, 
+                                        ORDEN ASC
+                                  LIMIT 1;", $filtro);
+    
+    if ($link->hayError()) {
+        die(json_encode(['success' => true, 'root' => $link->getListaErrores()]));
+    }
+    
+    $link->close();
+    unset($link);
+
+    $datosSerieAbierta = $datosSerieAbierta[0];
+    
+    
     $manejador = ControladorDinamicoTabla::set('MRC_COMPETICION');
     if ($manejador->give(["ID" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
@@ -23,7 +48,7 @@
     unset($manejador);
 
     $manejador = ControladorDinamicoTabla::set('MRC_PRUEBA');
-    if ($manejador->give(["ID" => $_POST['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
+    if ($manejador->give(["ID" => $datosSerieAbierta['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
     }
 
@@ -36,7 +61,7 @@
     unset($manejador);
 
     $manejador = ControladorDinamicoTabla::set('MRC_SERIE');
-    if ($manejador->give(["ORDEN" => $_POST['ORDEN'], "CALLE" => $_POST['CALLE'], "PRUEBA" => $_POST['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
+    if ($manejador->give(["ORDEN" => $datosSerieAbierta['ORDEN'], "CALLE" => $_POST['CALLE'], "PRUEBA" => $datosSerieAbierta['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
     }
 

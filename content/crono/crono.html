@@ -1,14 +1,9 @@
 <div style="margin:10px; padding: 10px;">
-    <form name="infoSerie" method="post" frC-Callback="infoSerie" action="/acuario/backend/infoSerie.php" frC-AutoLoad="true">
-        <div class="row">
-            <div class="col col-1">Competición:</div><div class="col col-2"><input name="COMPETICION" type="number" value="1"></div>
-            <div class="col col-1">Prueba:     </div><div class="col col-2"><input name="PRUEBA"      type="number" value="1"></div>
-            <div class="col col-1">Serie:      </div><div class="col col-2"><input name="ORDEN"       type="number" value="1"></div>
-            <div class="col col-1">Calle:      </div><div class="col col-2"><input name="CALLE"       type="number" value="1"></div>
-        </div>
-    </form>
-    <div class="row" style="text-align: center;">
-        <div class="col col-12"><span name="name-competicion"></span></div>
+    <div class="row">
+        <form name="infoSerie" method="post" frC-Callback="infoSerie" action="/acuario/backend/infoSerie.php" frC-AutoLoad="true">
+            <div class="col col-1">Competición:</div><div class="col col-2"><select name="COMPETICION"><option value="1">I Competición de prueba</option></select></div>
+            <div class="col col-1">Calle:      </div><div class="col col-2"><select name="CALLE"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+        </form>
     </div>
     <div class="row" style="text-align: center;">
         <div class="col col-9"><span name="name-prueba"></span></div>
@@ -24,20 +19,20 @@
     </div>
     <div class="row">
         <div style="text-align: center;" class="col col-12">
-            <button name="inicia-crono"  type="button" class="btn btn-success"   >Inicia</button>
-            <button name="parcial-crono" type="button" class="btn btn-success xx">Vuelta</button>
-            <button name="para-crono"    type="button" class="btn btn-danger xx" >Para  </button>
-            <button name="reset-crono"   type="button" class="btn btn-danger xx" >Borra </button>
+            <button name="inicia-crono"  style="font-size: -webkit-xxx-large;" type="button" class="btn btn-success"   >Inicia</button>
+            <button name="parcial-crono" style="font-size: -webkit-xxx-large;" type="button" class="btn btn-success xx">Vuelta</button>
+            <button name="para-crono"    style="font-size: -webkit-xxx-large;" type="button" class="btn btn-danger  xx">Para  </button>
+            <button name="reset-crono"   style="font-size: -webkit-xxx-large;" type="button" class="btn btn-danger  xx">Borra </button>
         </div>
     </div>
     <div style="margin-top: 15px;" id="display-parciales">
         
     </div>
     <form name="guardaTiempo" class="xx" method="post" frC-Callback="guardaTiempo" action="/acuario/backend/guardaTiempo.php">
-        <input name="COMPETICION" type="number" value="1">
-        <input name="PRUEBA"      type="number" value="1">
-        <input name="ORDEN"       type="number" value="1">
-        <input name="CALLE"       type="number" value="1">
-        <input name="TIEMPO"      type="number" value="">
+        <input name="COMPETICION" type="number" value="0">
+        <input name="PRUEBA"      type="number" value="0">
+        <input name="ORDEN"       type="number" value="0">
+        <input name="CALLE"       type="number" value="0">
+        <input name="TIEMPO"      type="text" value="">
     </form>
 </div>
