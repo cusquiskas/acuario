@@ -33,6 +33,8 @@
     unset($link);
 
     $datosSerieAbierta = $datosSerieAbierta[0];
+    $resultado["SER_ORDEN"] = datosSerieAbierta["ORDEN"];
+    $resultado["SER_PRUEBA"] = datosSerieAbierta["PRUEBA"];
     
     
     $manejador = ControladorDinamicoTabla::set('MRC_COMPETICION');

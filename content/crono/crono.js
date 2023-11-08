@@ -97,13 +97,14 @@ var crono = class {
             $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
             $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
             $("span[name=name-nadador]").html(d.root.SER_NADADOR + ' (' + d.root.SER_CLUB + ')');
+            e.form.set({PRUEBA:d.root.SER_PRUEBA, ORDEN:d.root.SER_ORDEN});
         } else {
             validaErroresCBK(d);
         }
     }
 
     guardaTiempo (s, d, e) {
-        validaErroresCBK(d);
+        if (!s) validaErroresCBK(d);
     }
 
 }
