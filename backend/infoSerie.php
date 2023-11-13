@@ -9,7 +9,7 @@
     header('Content-Type: application/json; charset=utf-8');
 
     $resultado = [];
-
+    $datosSerie = [];
     $link = new ConexionSistema();
     
     $filtro = [
@@ -24,7 +24,18 @@
                                      BY ABIERTA DESC, 
                                         ORDEN ASC
                                   LIMIT 1;", $filtro);
+    /*
+    SELECT * 
+  FROM MRC_PRUEBA,
+       MRC_SERIE
+ WHERE MRC_PRUEBA.ID = MRC_SERIE.PRUEBA
+   AND MRC_PRUEBA.COMPETICION = MRC_SERIE.COMPETICION
+ ORDER
+    BY MRC_PRUEBA.ORDEN,
+       MRC_SERIE.ORDEN
     
+    */
+
     if ($link->hayError()) {
         die(json_encode(['success' => true, 'root' => $link->getListaErrores()]));
     }
@@ -32,9 +43,9 @@
     $link->close();
     unset($link);
 
-    $datosSerieAbierta = $datosSerieAbierta[0];
-    $resultado["SER_ORDEN"] = datosSerieAbierta["ORDEN"];
-    $resultado["SER_PRUEBA"] = datosSerieAbierta["PRUEBA"];
+    $datosSerie = $datosSerieAbierta[0];
+    $resultado["SER_ORDEN"] = datosSerie["ORDEN"];
+    $resultado["SER_PRUEBA"] = datosSerie["PRUEBA"];
     
     
     $manejador = ControladorDinamicoTabla::set('MRC_COMPETICION');
@@ -50,7 +61,7 @@
     unset($manejador);
 
     $manejador = ControladorDinamicoTabla::set('MRC_PRUEBA');
-    if ($manejador->give(["ID" => $datosSerieAbierta['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
+    if ($manejador->give(["ID" => $datosSerie['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
     }
 
@@ -63,7 +74,7 @@
     unset($manejador);
 
     $manejador = ControladorDinamicoTabla::set('MRC_SERIE');
-    if ($manejador->give(["ORDEN" => $datosSerieAbierta['ORDEN'], "CALLE" => $_POST['CALLE'], "PRUEBA" => $datosSerieAbierta['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
+    if ($manejador->give(["ORDEN" => $datosSerie['ORDEN'], "CALLE" => $_POST['CALLE'], "PRUEBA" => $datosSerie['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
     }
 

@@ -28,7 +28,8 @@
                                      ESTILOS.NOMBRE 'ESTILO',
                                      CONCAT(COMPETICION.TIEMPO DIV 60, ':', COMPETICION.TIEMPO MOD 60) 'TIEMPO',
                                      BAÑERA.NOMBRE 'PISCINA',
-                                     PISCINA.NOMBRE 'INSTALACION'
+                                     PISCINA.NOMBRE 'INSTALACION',
+                                     DESCALIFICADO
                                  FROM COMPETICION,
                                      BAÑERA,
                                      PISCINA,

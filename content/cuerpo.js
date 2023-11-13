@@ -18,8 +18,8 @@ var cuerpo = class {
         if (s) {
             let tabla = $("#datosTabla");
             tabla.empty();
-            let tr = "<tr><td>{{FECHA}}</td><td>{{PRUEBA}}</td><td>{{NADADOR}}</td><td>{{DISTANCIA}}</td><td>{{ESTILO}}</td><td>{{TIEMPO}}</td><td>{{PISCINA}}</td><td>{{INSTALACION}}</td></tr>";
-            for (let i = 0; i < d.root.length; i++) $(tr.reemplazaMostachos(d.root[i])).appendTo(tabla);
+            let tr = "<tr class='[[DESCALIFICADO]]'><td>{{FECHA}}</td><td>{{PRUEBA}}</td><td>{{NADADOR}}</td><td>{{DISTANCIA}}</td><td>{{ESTILO}}</td><td>{{TIEMPO}}</td><td>{{PISCINA}}</td><td>{{INSTALACION}}</td></tr>";
+            for (let i = 0; i < d.root.length; i++) $(tr.replace('[[DESCALIFICADO]]', (d.root[i].DESCALIFICADO==1?'text-bg-danger':'')).reemplazaMostachos(d.root[i])).appendTo(tabla);
         } else {
             validaErroresCBK(d);
         }
