@@ -15,6 +15,9 @@ var header = class {
         $("button[name=abre-serie]").click(function () {
             Moduls.getBody().load({ url: 'content/serie/serie.html', script: true });
         });
+        $("button[name=abre-niños]").click(function () {
+            Moduls.getBody().load({ url: 'content/cuerpo.html', script: true });
+        });
     }
 
 }

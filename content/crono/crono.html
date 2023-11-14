@@ -1,9 +1,9 @@
 <div style="margin:10px; padding: 10px;">
     <div class="row">
-        <form name="infoSerie" method="post" frC-Callback="infoSerie" action="/acuario/backend/infoSerie.php" frC-AutoLoad="true">
+        <form name="infoSerie" method="post" frC-Callback="infoSerie" action="/acuario/backend/infoSerie.php">
             <input name="PRUEBA" class="xx" type="number" value="">  <input name="ORDEN"  class="xx" type="number" value="">
-            <div class="col col-1">Competición:</div><div class="col col-2"><select name="COMPETICION"><option value="1">I Competición de prueba</option></select></div>
-            <div class="col col-1">Calle:      </div><div class="col col-2"><select name="CALLE"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+            <div class="col col-1">Competición:</div><div class="col col-2"><select name="COMPETICION" frC-Store="/acuario/backend/listaCompeticion.php" frC-indexResponse="root:NOMBRE,ID"></select></div>
+            <div class="col col-1">Calle:      </div><div class="col col-2"><select name="CALLE" frC-Reference="COMPETICION" frC-Store="/acuario/backend/listaCalle.php" frC-indexResponse="root:NOMBRE,ID"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
         </form>
     </div>
     <div class="row" style="text-align: center;">
