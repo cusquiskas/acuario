@@ -15,27 +15,22 @@
     $filtro = [
         0 => ['tipo' => 'i', 'dato' => $_POST['COMPETICION']]  
     ];  
-    $datosSerieAbierta = $link->consulta( "SELECT DISTINCT ORDEN,
-                                        PRUEBA, ABIERTA
-                                   FROM MRC_SERIE
-                                  WHERE COMPETICION = ? 
-                                    AND ABIERTA < 2
-                                  ORDER 
-                                     BY ABIERTA DESC, 
-                                        ORDEN ASC
-                                  LIMIT 1;", $filtro);
-    /*
-    SELECT * 
-  FROM MRC_PRUEBA,
-       MRC_SERIE
- WHERE MRC_PRUEBA.ID = MRC_SERIE.PRUEBA
-   AND MRC_PRUEBA.COMPETICION = MRC_SERIE.COMPETICION
- ORDER
-    BY MRC_PRUEBA.ORDEN,
-       MRC_SERIE.ORDEN
+    $datosSerieAbierta = $link->consulta( '  SELECT MRC_PRUEBA.ORDEN "NUM_PRUEBA",
+                                                    MRC_PRUEBA.ID "ID_PRUEBA",
+                                                    MRC_PRUEBA.ABIERTA "EST_PRUEBA",
+                                                    MRC_SERIE.ORDEN "NUM_SERIE",
+                                                    MRC_SERIE.ABIERTA "EST_SERIE"
+                                               FROM MRC_PRUEBA,
+                                                    MRC_SERIE
+                                              WHERE MRC_PRUEBA.ID = MRC_SERIE.PRUEBA
+                                                AND MRC_PRUEBA.COMPETICION = MRC_SERIE.COMPETICION
+                                                AND MRC_PRUEBA.COMPETICION = ?
+                                                AND MRC_SERIE.ABIERTA < 2
+                                              ORDER
+                                                 BY MRC_PRUEBA.ORDEN,
+                                                    MRC_SERIE.ORDEN
+                                              LIMIT 1;', $filtro);
     
-    */
-
     if ($link->hayError()) {
         die(json_encode(['success' => true, 'root' => $link->getListaErrores()]));
     }
@@ -44,8 +39,8 @@
     unset($link);
 
     $datosSerie = $datosSerieAbierta[0];
-    $resultado["SER_ORDEN"] = datosSerie["ORDEN"];
-    $resultado["SER_PRUEBA"] = datosSerie["PRUEBA"];
+    $resultado["SER_ORDEN" ] = $datosSerie["NUM_SERIE" ];
+    $resultado["SER_PRUEBA"] = $datosSerie["NUM_PRUEBA"];
     
     
     $manejador = ControladorDinamicoTabla::set('MRC_COMPETICION');
@@ -61,7 +56,7 @@
     unset($manejador);
 
     $manejador = ControladorDinamicoTabla::set('MRC_PRUEBA');
-    if ($manejador->give(["ID" => $datosSerie['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
+    if ($manejador->give(["ID" => $datosSerie['ID_PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
     }
 
@@ -74,7 +69,7 @@
     unset($manejador);
 
     $manejador = ControladorDinamicoTabla::set('MRC_SERIE');
-    if ($manejador->give(["ORDEN" => $datosSerie['ORDEN'], "CALLE" => $_POST['CALLE'], "PRUEBA" => $datosSerie['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
+    if ($manejador->give(["ORDEN" => $datosSerie['NUM_SERIE'], "CALLE" => $_POST['CALLE'], "PRUEBA" => $datosSerie['ID_PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
     }
 

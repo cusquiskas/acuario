@@ -15,15 +15,21 @@
     $filtro = [
         0 => ['tipo' => 'i', 'dato' => $_POST['COMPETICION']]  
     ];  
-    $datosSerieAbierta = $link->consulta( "SELECT DISTINCT ORDEN,
-                                        PRUEBA, ABIERTA
-                                   FROM MRC_SERIE
-                                  WHERE COMPETICION = ? 
-                                    AND ABIERTA < 2
-                                  ORDER 
-                                     BY ABIERTA DESC, 
-                                        ORDEN ASC
-                                  LIMIT 1;", $filtro);
+    $datosSerieAbierta = $link->consulta( '  SELECT MRC_PRUEBA.ORDEN "NUM_PRUEBA",
+                                                    MRC_PRUEBA.ID "ID_PRUEBA",
+                                                    MRC_PRUEBA.ABIERTA "EST_PRUEBA",
+                                                    MRC_SERIE.ORDEN "NUM_SERIE",
+                                                    MRC_SERIE.ABIERTA "EST_SERIE"
+                                                FROM MRC_PRUEBA,
+                                                    MRC_SERIE
+                                                WHERE MRC_PRUEBA.ID = MRC_SERIE.PRUEBA
+                                                AND MRC_PRUEBA.COMPETICION = MRC_SERIE.COMPETICION
+                                                AND MRC_PRUEBA.COMPETICION = ?
+                                                AND MRC_SERIE.ABIERTA < 2
+                                                ORDER
+                                                BY MRC_PRUEBA.ORDEN,
+                                                    MRC_SERIE.ORDEN
+                                                LIMIT 1;', $filtro);
     
     if ($link->hayError()) {
         die(json_encode(['success' => true, 'root' => $link->getListaErrores()]));
@@ -31,8 +37,8 @@
     $datosSerieAbierta = $datosSerieAbierta[0];
     $filtro = [
         0 => ['tipo' => 'i', 'dato' => $_POST['COMPETICION']],
-        1 => ['tipo' => 'i', 'dato' => $datosSerieAbierta['PRUEBA']],
-        2 => ['tipo' => 'i', 'dato' => $datosSerieAbierta['ORDEN']]        
+        1 => ['tipo' => 'i', 'dato' => $datosSerieAbierta['ID_PRUEBA']],
+        2 => ['tipo' => 'i', 'dato' => $datosSerieAbierta['NUM_SERIE']]        
     ];  
     $listado = $link->consulta( "SELECT CALLE,
                                         NADADOR,
@@ -75,8 +81,8 @@
     $resultado["PRU_ORDEN"    ] = $listado[0]["ORDEN"    ];
     $resultado["PRU_ESTILO"   ] = $listado[0]["ESTILO"   ];
     $resultado["PRU_DISTANCIA"] = $listado[0]["DISTANCIA"];
-    $resultado["SER_ORDEN"    ] = $datosSerieAbierta["ORDEN"];
-    $resultado["SER_ABIERTA"  ] = $datosSerieAbierta["ABIERTA"];
+    $resultado["SER_ORDEN"    ] = $datosSerieAbierta["NUM_SERIE"];
+    $resultado["SER_ABIERTA"  ] = $datosSerieAbierta["EST_SERIE"];
 
     unset($manejador);
 

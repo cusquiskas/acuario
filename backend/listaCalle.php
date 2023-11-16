@@ -15,10 +15,10 @@
 
     $listado = $manejador->getArray();
     $resultado = [];
-    for ($i = 1; $i <= $listado[0]["CALLES"]; $i++) {
-        $resultado.array_pop ("NOMBRE" => "Calle $i", "ID" => "$i");
+    for ($i = ($listado[0]["CALLES"]==10)?0:1; $i <= $listado[0]["CALLES"]-($listado[0]["CALLES"]==10?1:0); $i++) {
+        $resultado[] = ["NOMBRE" => "Calle $i", "ID" => "$i"];
     }
-    echo json_encode(['success' => true, 'root' => $listado]);
+    echo json_encode(['success' => true, 'root' => $resultado]);
 
     unset($manejador);
 

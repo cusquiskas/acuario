@@ -19,6 +19,7 @@ var crono = class {
         $("button[name=para-crono]"   ).click(function() { me.paraCrono     (me);  });
         $("button[name=reset-crono]"  ).click(function() { me.reiniciaCrono (me);  });
         $("button[name=parcial-crono]").click(function() { me.parcialCrono  (me);  });
+        $("form[name=infoSerie] select[name=CALLE]").change(function() {me.buscaInfoSerie (me); });
     }
 
     comienzaCrono(me) {
@@ -44,7 +45,7 @@ var crono = class {
         $("button[name=reset-crono]"  ).removeClass('xx');
         let form = me.modulo.Forms['guardaTiempo'];
         form.set(me.modulo.Forms["infoSerie"].get());
-        form.set({TIEMPO:(me.parciales[me.parciales.length - 1] - me.start) / 1000});
+        form.set({TIEMPO:((me.parciales[me.parciales.length - 1] - me.start) / 1000) - .005});
         form.executeForm();
     }
 
@@ -89,6 +90,10 @@ var crono = class {
         '<div style="text-align: start;" class="col col-4">'+padLeft(minT)+':'+padLeft(segT)+'.'+padLeft(cenT)+'</div>' +
         '</div>';
         me.tablaTiempo.insertAdjacentHTML("beforeend", row);
+    }
+
+    buscaInfoSerie (me) {
+        me.modulo.Forms["infoSerie"].executeForm();
     }
 
     infoSerie (s, d, e) {
