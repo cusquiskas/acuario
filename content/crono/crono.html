@@ -1,11 +1,11 @@
 <div style="margin:10px; padding: 10px;">
-    <div class="row">
-        <form name="infoSerie" method="post" frC-Callback="infoSerie" action="/acuario/backend/infoSerie.php">
+    <form name="infoSerie" method="post" frC-Callback="infoSerie" action="/acuario/backend/infoSerie.php">
+        <div class="row">
             <input name="PRUEBA" class="xx" type="number" value="">  <input name="ORDEN"  class="xx" type="number" value="">
-            <div class="col col-1">Competición:</div><div class="col col-2"><select name="COMPETICION" frC-Store="/acuario/backend/listaCompeticion.php" frC-indexResponse="root:NOMBRE,ID"></select></div>
-            <div class="col col-1">Calle:      </div><div class="col col-2"><select name="CALLE" frC-Reference="COMPETICION:COMPETICION" frC-Store="/acuario/backend/listaCalle.php" frC-indexResponse="root:NOMBRE,ID"></select></div>
-        </form>
-    </div>
+            <div class="col col-6">Competición: <select name="COMPETICION" frC-Store="/acuario/backend/listaCompeticion.php" frC-indexResponse="root:NOMBRE,ID"></select></div>
+            <div class="col col-6">Calle:       <select name="CALLE" frC-Reference="COMPETICION:COMPETICION" frC-Store="/acuario/backend/listaCalle.php" frC-indexResponse="root:NOMBRE,ID"></select></div>
+        </div>
+    </form>
     <div class="row" style="text-align: center;">
         <div class="col col-9"><span name="name-prueba"></span></div>
         <div class="col col-3"><span name="name-serie"></span></div>
@@ -20,10 +20,10 @@
     </div>
     <div class="row">
         <div style="text-align: center;" class="col col-12">
-            <button name="inicia-crono"  style="font-size: -webkit-xxx-large;" type="button" class="btn btn-success"   >Inicia</button>
+            <button name="inicia-crono"  style="font-size: -webkit-xxx-large;" type="button" class="btn btn-disabled" disabled  >Inicia</button>
             <button name="parcial-crono" style="font-size: -webkit-xxx-large;" type="button" class="btn btn-success xx">Vuelta</button>
             <button name="para-crono"    style="font-size: -webkit-xxx-large;" type="button" class="btn btn-danger  xx">Para  </button>
-            <button name="reset-crono"   style="font-size: -webkit-xxx-large;" type="button" class="btn btn-danger  xx">Borra </button>
+            <button name="reset-crono"   style="font-size: -webkit-xxx-large;" type="button" class="btn btn-danger  xx">Siguiente Serie </button>
         </div>
     </div>
     <div style="margin-top: 15px;" id="display-parciales">

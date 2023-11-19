@@ -16,7 +16,7 @@ var serie = class {
     }
 
     abrirSerie (me, btn) {
-        me.intervalo = setInterval(me.actualizaResultados, 10000);
+        me.intervalo = setInterval(me.actualizaResultados, 1000);
         if (btn) {
             me.modulo.Forms['estadoSerie'].set({"ABIERTA":1});
             me.modulo.Forms['estadoSerie'].executeForm();
@@ -63,8 +63,9 @@ var serie = class {
     }
 
     listaNadadores (s, d, e) {
+        let tabla = $("#datosTabla");
+        if (!tabla) clearInterval(me.intervalo);
         if (s) {
-            let tabla = $("#datosTabla");
             tabla.empty();
             let me = e.form.modul.getScript();
             let tr = "<tr><td></td><td>{{CALLE}}</td><td>{{NADADOR}}</td><td>{{CLUB}}</td><td>{{TIEMPO}}</td></tr>";

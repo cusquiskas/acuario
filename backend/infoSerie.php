@@ -75,9 +75,10 @@
 
     $listado = $manejador->getArray();
 
-    $resultado["SER_ORDEN"  ] = $listado[0]["ORDEN"  ];
-    $resultado["SER_NADADOR"] = $listado[0]["NADADOR"];
-    $resultado["SER_CLUB"   ] = $listado[0]["CLUB"   ];
+    $resultado["SER_ORDEN"  ] = $listado[0]["ORDEN"    ];
+    $resultado["SER_NADADOR"] = $listado[0]["NADADOR"  ];
+    $resultado["SER_CLUB"   ] = $listado[0]["CLUB"     ];
+    $resultado["SER_ESTADO" ] = $datosSerie["EST_SERIE"];
 
     unset($manejador);
     

@@ -2,10 +2,13 @@
 
 class ConfiguracionSistema
 {
-    private $host = 'srv1065.hstgr.io';
-    private $user = 'u164639268_piscina';
+    #private $host = 'srv1065.hstgr.io';
+    private $host = 'localhost';
+    #private $user = 'u164639268_piscina';
+    private $user = 'piscina';
     private $pass = 'P3c3cit0sgr4nd3s';
-    private $apli = 'u164639268_piscina';
+    #private $apli = 'u164639268_piscina';
+    private $apli = 'piscina';
 
     private $home = '/opt/lampp/htdocs/acuario/';
 

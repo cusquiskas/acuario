@@ -58,6 +58,7 @@ var crono = class {
         $(me.tablaTiempo).empty();
         $("button[name=reset-crono]" ).addClass   ('xx');
         $("button[name=inicia-crono]").removeClass('xx');
+        me.buscaInfoSerie(me);
     }
 
     pintaCrono() {
@@ -93,16 +94,38 @@ var crono = class {
     }
 
     buscaInfoSerie (me) {
-        me.modulo.Forms["infoSerie"].executeForm();
+        if (!me) me = Moduls.getBody().getScript();
+        try {
+            let param = me.modulo.Forms.infoSerie.get();
+            if (param.COMPETICION == '' || param.CALLE == '') throw new Error('No se puede buscar nada');
+            me.modulo.Forms["infoSerie"].executeForm();
+        } catch (e) {
+            clearInterval(me.intervalo);
+            me.intervalo = null;
+        }
     }
 
     infoSerie (s, d, e) {
         if (s) {
+            let me = e.form.modul.getScript();
             $("span[name=name-competicion]").html(d.root.COM_PISCINA + ': ' + d.root.COM_NOMBRE);
             $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
             $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
             $("span[name=name-nadador]").html(d.root.SER_NADADOR + ' (' + d.root.SER_CLUB + ')');
             e.form.set({PRUEBA:d.root.SER_PRUEBA, ORDEN:d.root.SER_ORDEN});
+            if (d.root.SER_ESTADO != 1) {
+                if (!me.intervalo) {
+                    me.intervalo = setInterval(me.buscaInfoSerie, 1000);
+                    $("button[name=inicia-crono").removeClass('btn-success');
+                    $("button[name=inicia-crono").addClass('btn-disbled');
+                    $("button[name=inicia-crono").prop('disabled', true);
+                }
+            } else {
+                clearInterval(me.intervalo);
+                $("button[name=inicia-crono").removeClass('btn-disbled');
+                $("button[name=inicia-crono").addClass('btn-success');
+                $("button[name=inicia-crono").prop('disabled', false);
+            }
         } else {
             validaErroresCBK(d);
         }
