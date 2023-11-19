@@ -11,24 +11,55 @@ var serie = class {
 
     añadirEventos () {
         let me = this;
-        me.btnAbrirSerie. click(function () { me.abrirSerie (me); });
-        me.btnCerrarSerie.click(function () { me.cerrarSerie(me); });
+        me.btnAbrirSerie. click(function () { me.abrirSerie (me, true); });
+        me.btnCerrarSerie.click(function () { me.cerrarSerie(me, true); });
     }
 
-    abrirSerie (me) {
-        me.intervalo = setInterval(me.actualizaResultados, 1000);
-        me.btnAbrirSerie. addClass('xx');
-        me.btnCerrarSerie.removeClass('xx');
+    abrirSerie (me, btn) {
+        me.intervalo = setInterval(me.actualizaResultados, 10000);
+        if (btn) {
+            me.modulo.Forms['estadoSerie'].set({"ABIERTA":1});
+            me.modulo.Forms['estadoSerie'].executeForm();
+        }
+        //me.btnAbrirSerie. addClass('xx');
+        //me.btnCerrarSerie.removeClass('xx');
     }
 
-    cerrarSerie (me) {
+    cerrarSerie (me, btn) {
         clearInterval(me.intervalo);
-        me.btnAbrirSerie. removeClass('xx');
-        me.btnCerrarSerie.addClass('xx');
+        me.intervalo = null;
+        if (btn) {
+            me.modulo.Forms['estadoSerie'].set({"ABIERTA":2});
+            me.modulo.Forms['estadoSerie'].executeForm();
+        }
+        //me.btnAbrirSerie. removeClass('xx');
+        //me.btnCerrarSerie.addClass('xx');
     }
 
     actualizaResultados () {
         Moduls.getBody().Forms["listaNadadores"].executeForm();
+    }
+
+    actualizaEstadoSerie(estado) {
+        if (estado) {
+            if (!this.intervalo) this.abrirSerie(this, false);
+            this.btnAbrirSerie.addClass('xx');
+            this.btnCerrarSerie.removeClass('xx');
+        } else {
+            if (this.intervalo) this.cerrarSerie(this, false);
+            this.btnAbrirSerie.removeClass('xx');
+            this.btnCerrarSerie.addClass('xx');
+        }
+    }
+
+    estadoSerie (s, d, e) {
+        if (s) {
+            if (e.form.get().ABIERTA == '2') {
+                e.form.modul.Forms.listaNadadores.executeForm();
+            }
+        } else {
+            validaErroresCBK(d);
+        }
     }
 
     listaNadadores (s, d, e) {
@@ -41,8 +72,8 @@ var serie = class {
             $("span[name=name-piscina]").html('Piscina ' + d.root.COM_PISCINA);
             $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
             $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
-            if (d.root.SER_ABIERTA == 0) { me.btnAbrirSerie.removeClass('xx'); }
-            if (d.root.SER_ABIERTA == 1) { me.abrirSerie(me); }
+            me.actualizaEstadoSerie((d.root.SER_ABIERTA == 1));
+            me.modulo.Forms['estadoSerie'].set({"ORDEN":d.root.SER_ORDEN, "PRUEBA":d.root.PRU_ID, "COMPETICION":d.root.COM_ID});
         } else {
             validaErroresCBK(d);
         }

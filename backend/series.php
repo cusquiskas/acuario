@@ -66,7 +66,8 @@
 
     $listado = $manejador->getArray();
 
-    $resultado["COM_NOMBRE"]  = $listado[0]["NOMBRE" ];
+    $resultado["COM_NOMBRE" ] = $listado[0]["NOMBRE" ];
+    $resultado["COM_ID"     ] = $_POST["COMPETICION" ];
     $resultado["COM_PISCINA"] = $listado[0]["PISCINA"];
 
     unset($manejador);
@@ -81,6 +82,7 @@
     $resultado["PRU_ORDEN"    ] = $listado[0]["ORDEN"    ];
     $resultado["PRU_ESTILO"   ] = $listado[0]["ESTILO"   ];
     $resultado["PRU_DISTANCIA"] = $listado[0]["DISTANCIA"];
+    $resultado["PRU_ID"       ] = $datosSerieAbierta["ID_PRUEBA"];
     $resultado["SER_ORDEN"    ] = $datosSerieAbierta["NUM_SERIE"];
     $resultado["SER_ABIERTA"  ] = $datosSerieAbierta["EST_SERIE"];
 

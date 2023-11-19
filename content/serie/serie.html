@@ -1,5 +1,9 @@
 <div style="margin:10px; padding: 10px;">
     <div class="row" style="text-align: center;">
+        <form name="estadoSerie" class="" style="border: 1px solid red;" method="post" frC-Callback="estadoSerie" action="/acuario/backend/actualizaSerie.php">
+            <input type="number" name="ORDEN">       <input type="number" name="PRUEBA"> <input type="number" name="ABIERTA">
+            <input type="number" name="COMPETICION">
+        </form>
         <form name="listaNadadores" method="post" frC-Callback="listaNadadores" action="/acuario/backend/series.php" frC-Autoload="true">
             <div class="col col-12">
                 <h1>
