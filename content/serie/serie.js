@@ -9,6 +9,11 @@ var serie = class {
         this.añadirEventos();
     }
 
+    destructor () {
+        clearInterval(this.intervalo);
+        this.intervalo = null;
+    }
+
     añadirEventos () {
         let me = this;
         me.btnAbrirSerie. click(function () { me.abrirSerie (me, true); });

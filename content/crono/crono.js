@@ -13,6 +13,12 @@ var crono = class {
         this.añadirEventos();
     }
 
+    destructor () {
+        debugger;
+        clearInterval(this.intervalo);
+        this.intervalo = null;
+    }
+
     añadirEventos () {
         let me = this;
         $("button[name=inicia-crono]" ).click(function() { me.comienzaCrono (me);  });
