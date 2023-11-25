@@ -6,6 +6,16 @@ var serie = class {
         this.intervalo = null;
         this.btnAbrirSerie  = $('button[name=abrir-serie]' );
         this.btnCerrarSerie = $('button[name=cerrar-serie]');
+
+        this.screenLock = null;
+        
+        if(navigator.wakeLock) {
+            alert('compatible');
+            navigator.wakeLock.request("screen");
+        } else {
+            alert('ojo con el bloqueo');
+        }
+
         this.añadirEventos();
     }
 
@@ -18,6 +28,7 @@ var serie = class {
         let me = this;
         me.btnAbrirSerie. click(function () { me.abrirSerie (me, true); });
         me.btnCerrarSerie.click(function () { me.cerrarSerie(me, true); });
+        $("select[name=COMPETICION]").change(function () { me.modulo.Forms.listaNadadores.executeForm(); });
     }
 
     abrirSerie (me, btn) {
@@ -72,14 +83,19 @@ var serie = class {
         if (!tabla) clearInterval(me.intervalo);
         if (s) {
             tabla.empty();
-            let me = e.form.modul.getScript();
-            let tr = "<tr><td></td><td>{{CALLE}}</td><td>{{NADADOR}}</td><td>{{CLUB}}</td><td>{{TIEMPO}}</td></tr>";
-            for (let i = 0; i < d.root.NADADORES.length; i++) $(tr.reemplazaMostachos(d.root.NADADORES[i])).appendTo(tabla);
-            $("span[name=name-piscina]").html('Piscina ' + d.root.COM_PISCINA);
-            $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
-            $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
-            me.actualizaEstadoSerie((d.root.SER_ABIERTA == 1));
-            me.modulo.Forms['estadoSerie'].set({"ORDEN":d.root.SER_ORDEN, "PRUEBA":d.root.PRU_ID, "COMPETICION":d.root.COM_ID});
+            if (d.root.PRU_ID == null) {
+                $("div.esconder").addClass("xx");
+            } else {
+                $("div.esconder").removeClass("xx");
+                let me = e.form.modul.getScript();
+                let tr = "<tr><td></td><td>{{CALLE}}</td><td>{{NADADOR}}</td><td>{{CLUB}}</td><td>{{TIEMPO}}</td></tr>";
+                for (let i = 0; i < d.root.NADADORES.length; i++) $(tr.reemplazaMostachos(d.root.NADADORES[i])).appendTo(tabla);
+                $("span[name=name-piscina]").html('Piscina ' + d.root.COM_PISCINA);
+                $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
+                $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
+                me.actualizaEstadoSerie((d.root.SER_ABIERTA == 1));
+                me.modulo.Forms['estadoSerie'].set({"ORDEN":d.root.SER_ORDEN, "PRUEBA":d.root.PRU_ID, "COMPETICION":d.root.COM_ID});
+            }
         } else {
             validaErroresCBK(d);
         }

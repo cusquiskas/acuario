@@ -10,21 +10,28 @@ var crono = class {
         this.start = null;
         this.parciales = [];
         this.intervalo = null;
+        
+        if(navigator.wakeLock) {
+            alert('compatible');
+            navigator.wakeLock.request("screen");
+        } else {
+            alert('ojo con el bloqueo');
+        }
+
         this.añadirEventos();
     }
 
     destructor () {
-        debugger;
         clearInterval(this.intervalo);
         this.intervalo = null;
     }
 
     añadirEventos () {
         let me = this;
-        $("button[name=inicia-crono]" ).click(function() { me.comienzaCrono (me);  });
-        $("button[name=para-crono]"   ).click(function() { me.paraCrono     (me);  });
-        $("button[name=reset-crono]"  ).click(function() { me.reiniciaCrono (me);  });
-        $("button[name=parcial-crono]").click(function() { me.parcialCrono  (me);  });
+        $("button[name=inicia-crono]" ).click(function() { me.comienzaCrono  (me);  });
+        $("button[name=para-crono]"   ).click(function() { me.paraCrono      (me);  });
+        $("button[name=reset-crono]"  ).click(function() { me.revisaSerieTemp(me);  });
+        $("button[name=parcial-crono]").click(function() { me.parcialCrono   (me);  });
         $("form[name=infoSerie] select[name=CALLE]").change(function() {me.buscaInfoSerie (me); });
     }
 
@@ -53,6 +60,29 @@ var crono = class {
         form.set(me.modulo.Forms["infoSerie"].get());
         form.set({TIEMPO:((me.parciales[me.parciales.length - 1] - me.start) / 1000) - .005});
         form.executeForm();
+    }
+
+    revisaSerieTemp(me) {
+        me.modulo.Forms["controlSerie"].set(me.modulo.Forms["guardaTiempo"].get());
+        me.intervalo = setInterval(me.revisaSerie, 1000);
+    }
+
+    revisaSerie() {
+        let me = Moduls.getBody().getScript();
+        me.modulo.Forms["controlSerie"].executeForm();
+    }
+
+    controlSerie(s, d, e) {
+        if (s) {
+            let me = e.form.modul.getScript();
+            if (d.root) {
+                clearInterval(me.intervalo);
+                me.intervalo = null;
+                me.reiniciaCrono (me);
+            }
+        } else {
+            validaErroresCBK(d);
+        }
     }
 
     reiniciaCrono (me) {
@@ -114,23 +144,27 @@ var crono = class {
     infoSerie (s, d, e) {
         if (s) {
             let me = e.form.modul.getScript();
-            $("span[name=name-competicion]").html(d.root.COM_PISCINA + ': ' + d.root.COM_NOMBRE);
-            $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
-            $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
-            $("span[name=name-nadador]").html(d.root.SER_NADADOR + ' (' + d.root.SER_CLUB + ')');
-            e.form.set({PRUEBA:d.root.SER_PRUEBA, ORDEN:d.root.SER_ORDEN});
-            if (d.root.SER_ESTADO != 1) {
-                if (!me.intervalo) {
-                    me.intervalo = setInterval(me.buscaInfoSerie, 1000);
-                    $("button[name=inicia-crono").removeClass('btn-success');
-                    $("button[name=inicia-crono").addClass('btn-disbled');
-                    $("button[name=inicia-crono").prop('disabled', true);
-                }
+            if (d.root.SER_PRUEBA == null) {
+
             } else {
-                clearInterval(me.intervalo);
-                $("button[name=inicia-crono").removeClass('btn-disbled');
-                $("button[name=inicia-crono").addClass('btn-success');
-                $("button[name=inicia-crono").prop('disabled', false);
+                $("span[name=name-competicion]").html(d.root.COM_PISCINA + ': ' + d.root.COM_NOMBRE);
+                $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);
+                $("span[name=name-serie]").html('Serie ' + d.root.SER_ORDEN);
+                $("span[name=name-nadador]").html(d.root.SER_NADADOR + ' (' + d.root.SER_CLUB + ')');
+                e.form.set({PRUEBA:d.root.SER_PRUEBA, ORDEN:d.root.SER_ORDEN});
+                if (d.root.SER_ESTADO != 1) {
+                    if (!me.intervalo) {
+                        me.intervalo = setInterval(me.buscaInfoSerie, 1000);
+                        $("button[name=inicia-crono").removeClass('btn-success');
+                        $("button[name=inicia-crono").addClass('btn-disbled');
+                        $("button[name=inicia-crono").prop('disabled', true);
+                    }
+                } else {
+                    clearInterval(me.intervalo);
+                    $("button[name=inicia-crono").removeClass('btn-disbled');
+                    $("button[name=inicia-crono").addClass('btn-success');
+                    $("button[name=inicia-crono").prop('disabled', false);
+                }
             }
         } else {
             validaErroresCBK(d);
