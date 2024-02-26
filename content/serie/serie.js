@@ -73,7 +73,7 @@ var serie = class {
         if (s) {
             tabla.empty();
             let me = e.form.modul.getScript();
-            let tr = "<tr><td></td><td>{{CALLE}}</td><td>{{NADADOR}}</td><td>{{CLUB}}</td><td>{{TIEMPO}}</td></tr>";
+            let tr = "<tr><td></td><td style='text-align:center'>{{CALLE}}</td><td>{{NADADOR}}</td><td>{{CLUB}}</td><td>{{TIEMPO}}</td><td></td></tr>";
             for (let i = 0; i < d.root.NADADORES.length; i++) $(tr.reemplazaMostachos(d.root.NADADORES[i])).appendTo(tabla);
             $("span[name=name-piscina]").html('Piscina ' + d.root.COM_PISCINA);
             $("span[name=name-prueba]").html('Prueba ' + d.root.PRU_ORDEN + ': ' + d.root.PRU_DISTANCIA + 'm ' + d.root.PRU_ESTILO);

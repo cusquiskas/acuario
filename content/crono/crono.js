@@ -14,7 +14,6 @@ var crono = class {
     }
 
     destructor () {
-        debugger;
         clearInterval(this.intervalo);
         this.intervalo = null;
     }
