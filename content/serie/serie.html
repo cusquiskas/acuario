@@ -1,23 +1,24 @@
 <div style="margin:10px; padding: 10px;">
+    <div class="xx"><video src="./css/video/video.mp4" loop autoplay playsinline muted width="10px" style="border: 1px solid red"></video></div>
     <div class="row" style="text-align: center;">
         <form name="estadoSerie" class="xx" method="post" frC-Callback="estadoSerie" action="/acuario/backend/actualizaSerie.php">
             <input type="number" name="ORDEN">       <input type="number" name="PRUEBA"> <input type="number" name="ABIERTA">
             <input type="number" name="COMPETICION">
         </form>
-        <form name="listaNadadores" method="post" frC-Callback="listaNadadores" action="/acuario/backend/series.php" frC-Autoload="true">
+        <form name="listaNadadores" method="post" frC-Callback="listaNadadores" action="/acuario/backend/series.php">
             <div class="col col-12">
                 <h1>
-                    <select name="COMPETICION"><option value="1">I Competición de prueba</option></select>
+                    <select name="COMPETICION" frC-Store="/acuario/backend/listaCompeticion.php" frC-indexResponse="root:NOMBRE,ID"></select>
                 </h1>
             </div>
         </form>
     </div>
-    <div class="row" style="text-align: center;">
+    <div class="row esconder" style="text-align: center;">
         <div class="col col-3"><h2><span name="name-piscina"></span></h2></div>
         <div class="col col-6"><h2><span name="name-prueba"> </span></h2></div>
         <div class="col col-3"><h2><span name="name-serie">  </span></h2></div>
     </div>
-    <div style="text-align: center;" class="row">
+    <div style="text-align: center;" class="row esconder">
         <div class="col col-12">
             <button name="abrir-serie"  class="btn btn-success xx">Abrir Serie</button>
             <button name="cerrar-serie" class="btn btn-danger  xx">Siguiente Serie</button>

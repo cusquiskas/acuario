@@ -1,4 +1,5 @@
 <div style="margin:10px; padding: 10px;">
+    <div class="xx"><video src="./css/video/video.mp4" loop autoplay playsinline muted width="10px" style="border: 1px solid red"></video></div>
     <form name="infoSerie" method="post" frC-Callback="infoSerie" action="/acuario/backend/infoSerie.php">
         <div class="row">
             <input name="PRUEBA" class="xx" type="number" value="">  <input name="ORDEN"  class="xx" type="number" value="">
@@ -35,5 +36,10 @@
         <input name="ORDEN"       type="number" value="0">
         <input name="CALLE"       type="number" value="0">
         <input name="TIEMPO"      type="text"   value="">
+    </form>
+    <form name="controlSerie" class="xx" method="post" frC-Callback="controlSerie" action="/acuario/backend/controlSerie.php">
+        <input name="COMPETICION" type="number" value="0">
+        <input name="PRUEBA"      type="number" value="0">
+        <input name="ORDEN"       type="number" value="0">
     </form>
 </div>

@@ -6,9 +6,9 @@ class ConfiguracionSistema
     private $host = 'localhost';
     #private $user = 'u164639268_piscina';
     private $user = 'piscina';
-    private $pass = 'P3c3cit0sgr4nd3s';
     #private $apli = 'u164639268_piscina';
     private $apli = 'piscina';
+    private $pass = 'P3c3cit0sgr4nd3s';
 
     private $home = '/opt/lampp/htdocs/acuario/';
 

@@ -73,7 +73,7 @@
     unset($manejador);
 
     $manejador = ControladorDinamicoTabla::set('MRC_PRUEBA');
-    if ($manejador->give(["ID" => $datosSerieAbierta['PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
+    if ($manejador->give(["ID" => $datosSerieAbierta['ID_PRUEBA'], "COMPETICION" => $_POST['COMPETICION']]) != 0) {
         die(json_encode(['success' => false, 'root' => $manejador->getListaErrores()]));
     }
 
